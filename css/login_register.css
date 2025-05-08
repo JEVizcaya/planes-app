@@ -84,6 +84,50 @@ body.register-page {
     margin-bottom: 1rem;
 }
 
+/* Estilos para el centrado global y responsividad */
+.crear-plan-page {
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center;     /* Centrado vertical */
+    height: 100vh;           /* Ocupa toda la altura de la ventana */
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0 1rem;
+}
+
+.form-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 480px; /* Máximo ancho */
+    width: 100%;      /* Asegura que sea responsivo */
+}
+
+h2 {
+    color: #007bff; /* Color azul para el título */
+}
+
+.form-label {
+    font-weight: 500; /* Títulos de los inputs en negrita */
+}
+
+.form-input {
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.alert-danger {
+    margin-bottom: 1rem;
+}
+
+.btn-lg {
+    font-size: 1.1rem;
+}
+
 /* Responsive */
 @media (max-width: 480px) {
     .form-container {
