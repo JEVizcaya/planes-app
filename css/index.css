@@ -1,0 +1,97 @@
+/* Estilos generales */
+body {
+    font-family: sans-serif;
+    background-color: #f8f9fa; /* Un gris claro de fondo */
+    color: #333; /* Texto principal oscuro */
+    padding-top: 60px; /* Espacio para la barra de navegación si la agregas después */
+    padding-bottom: 30px;
+}
+body.full-height-center {
+    min-height: 100vh; /* Asegura que el body al menos ocupe toda la altura de la ventana */
+    display: flex;
+    flex-direction: column; /* Para que el container se centre dentro del body */
+    align-items: center;
+    justify-content: center;
+    margin: 0; /* Elimina márgenes predeterminados del body */
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1, h2 {
+    color: #007bff; /* Azul primario para los títulos */
+    margin-bottom: 20px;
+}
+
+p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* Estilos para los botones */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: #1e7e34;
+    border-color: #1e7e34;
+}
+
+.m-2 {
+    margin: 0.5rem; /* Espacio entre los botones */
+}
+
+/* Estilos para la lista de planes */
+.mt-5 {
+    margin-top: 3rem; /* Espacio superior para la sección de planes */
+}
+
+.list-group {
+    list-style: none;
+    padding: 0;
+}
+
+.list-group-item {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: left; /* Alinea el texto de los planes a la izquierda para mejor lectura */
+}
+
+.list-group-item strong {
+    color: #007bff; /* Resalta el título del plan */
+}
+
+/* Estilo para el mensaje de "no hay planes" */
+.mt-5 p {
+    font-style: italic;
+    color: #6c757d;
+}
