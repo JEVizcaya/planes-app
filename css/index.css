@@ -1,97 +1,65 @@
-/* Estilos generales */
 body {
-    font-family: sans-serif;
-    background-color: #f8f9fa; /* Un gris claro de fondo */
-    color: #333; /* Texto principal oscuro */
-    padding-top: 60px; /* Espacio para la barra de navegación si la agregas después */
-    padding-bottom: 30px;
-}
-body.full-height-center {
-    min-height: 100vh; /* Asegura que el body al menos ocupe toda la altura de la ventana */
+    min-height: 100vh;
+    margin: 0;
     display: flex;
-    flex-direction: column; /* Para que el container se centre dentro del body */
-    align-items: center;
-    justify-content: center;
-    margin: 0; /* Elimina márgenes predeterminados del body */
+    flex-direction: column;
+    background: linear-gradient(to bottom right, #f0f8ff, #ffffff);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
-h1, h2 {
-    color: #007bff; /* Azul primario para los títulos */
-    margin-bottom: 20px;
+.hero-section {
+    text-align: center;
+    padding: 4rem 1rem;
+    background: linear-gradient(90deg, #007bff, #00bcd4);
+    color: white;
 }
 
-p {
-    line-height: 1.6;
-    margin-bottom: 15px;
+.hero-section h1 {
+    font-weight: 700;
 }
 
-/* Estilos para los botones */
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    display: inline-block;
-    transition: background-color 0.3s ease;
+.hero-section .btn {
+    min-width: 160px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
 }
 
-.btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
+.hero-section .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-.btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    display: inline-block;
-    transition: background-color 0.3s ease;
+.cards-container {
+    padding: 2rem 4vw;
 }
 
-.btn-success:hover {
-    background-color: #1e7e34;
-    border-color: #1e7e34;
+.card {
+    transition: transform 0.2s ease-in-out;
+    border: none;
 }
 
-.m-2 {
-    margin: 0.5rem; /* Espacio entre los botones */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* Estilos para la lista de planes */
-.mt-5 {
-    margin-top: 3rem; /* Espacio superior para la sección de planes */
+.card-footer {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    font-size: 0.9rem;
 }
 
-.list-group {
-    list-style: none;
-    padding: 0;
-}
-
-.list-group-item {
-    background-color: #fff;
-    border: 1px solid #dee2e6;
-    margin-bottom: 10px;
-    padding: 15px;
-    border-radius: 5px;
-    text-align: left; /* Alinea el texto de los planes a la izquierda para mejor lectura */
-}
-
-.list-group-item strong {
-    color: #007bff; /* Resalta el título del plan */
-}
-
-/* Estilo para el mensaje de "no hay planes" */
-.mt-5 p {
-    font-style: italic;
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
     color: #6c757d;
 }

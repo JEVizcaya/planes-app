@@ -32,35 +32,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Iniciar Sesión</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/login_register.css">
 </head>
-<body class="container mt-5">
-    <h2>Iniciar Sesión</h2>
+<body class="login-page">
 
-    <?php if (isset($_GET['registered'])): ?>
-        <div class="alert alert-success">Registro exitoso. Ahora puedes iniciar sesión.</div>
-    <?php endif; ?>
+    <form method="POST" class="form-container">
+        <h2 class="text-center mb-4 text-primary">Iniciar Sesión</h2>
 
-    <?php if (!empty($errors)): ?>
-        <div class="alert alert-danger">
-            <ul>
-                <?php foreach ($errors as $error): ?>
-                    <li><?= htmlspecialchars($error) ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
+        <?php if (isset($_GET['registered'])): ?>
+            <div class="alert alert-success">Registro exitoso. Ahora puedes iniciar sesión.</div>
+        <?php endif; ?>
 
-    <form method="POST">
+        <?php if (!empty($errors)): ?>
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    <?php foreach ($errors as $error): ?>
+                        <li><?= htmlspecialchars($error) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+
         <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" name="email" id="email" class="form-control" required>
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="email" name="email" id="email" class="form-control form-input" required>
         </div>
+
         <div class="mb-3">
             <label for="password" class="form-label">Contraseña</label>
-            <input type="password" name="password" id="password" class="form-control" required>
+            <input type="password" name="password" id="password" class="form-control form-input" required>
         </div>
-        <button type="submit" class="btn btn-primary">Entrar</button>
-        <a href="register.php" class="btn btn-link">¿No tienes cuenta? Regístrate</a>
+
+        <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-primary btn-lg">Entrar</button>
+            <a href="register.php" class="btn btn-outline-secondary btn-lg">¿No tienes cuenta? Regístrate</a>
+        </div>
     </form>
+
 </body>
 </html>

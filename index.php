@@ -21,40 +21,49 @@ $planes = $stmt->fetchAll();
     <title>Bienvenido a PlanesApp</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/index.css">
+    
 </head>
-<body class="bg-light full-height-center">
-    <div class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8 text-center">
-                <h1 class="display-4 text-primary mb-4">Bienvenido a PlanesApp</h1>
-                <p class="lead mb-4">Conéctate con otros y comparte tus planes.</p>
-                <div>
-                    <a href="login.php" class="btn btn-primary btn-lg m-2">Iniciar sesión</a>
-                    <a href="register.php" class="btn btn-success btn-lg m-2">Registrarse</a>
-                </div>
+<body>
 
-                <h2 class="mt-5 text-secondary">Planes disponibles</h2>
-                <div class="mt-4">
-                    <?php if ($planes): ?>
-                        <ul class="list-group">
-                            <?php foreach ($planes as $plan): ?>
-                                <li class="list-group-item shadow-sm mb-3 rounded">
-                                    <h5 class="mb-1 text-info"><?= htmlspecialchars($plan['titulo']) ?></h5>
-                                    <p class="mb-1"><?= htmlspecialchars($plan['descripcion']) ?></p>
-                                    <p class="small text-muted mb-0">
-                                        Fecha: <?= htmlspecialchars($plan['fecha']) ?><br>
-                                        Lugar: <?= htmlspecialchars($plan['lugar']) ?>
-                                    </p>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php else: ?>
-                        <p class="text-muted">No hay planes disponibles en este momento.</p>
-                    <?php endif; ?>
-                </div>
-            </div>
+    <main>
+        <div class="hero-section bg-primary text-white">
+            <h1 class="display-4">Bienvenido a PlanesApp</h1>
+            <p class="lead">Conéctate con otros y comparte tus planes.</p>
+            <div class="mt-4">
+    <a href="login.php" class="btn btn-light btn-lg px-4 me-2 shadow-sm">Iniciar sesión</a>
+    <a href="register.php" class="btn btn-outline-light btn-lg px-4 shadow-sm">Registrarse</a>
+</div>
         </div>
-    </div>
+
+        <div class="cards-container">
+            <h2 class="text-center text-secondary mb-4">Planes disponibles</h2>
+
+            <?php if ($planes): ?>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    <?php foreach ($planes as $plan): ?>
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-info"><?= htmlspecialchars($plan['titulo']) ?></h5>
+                                    <p class="card-text"><?= htmlspecialchars($plan['descripcion']) ?></p>
+                                </div>
+                                <div class="card-footer bg-light text-muted small">
+                                    <div>Fecha: <?= htmlspecialchars($plan['fecha']) ?></div>
+                                    <div>Lugar: <?= htmlspecialchars($plan['lugar']) ?></div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
+                <p class="text-center text-muted">No hay planes disponibles en este momento.</p>
+            <?php endif; ?>
+        </div>
+    </main>
+
+    <footer>
+        &copy; <?= date('Y') ?> PlanesApp. Todos los derechos reservados.
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
