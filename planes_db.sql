@@ -33,7 +33,7 @@ CREATE TABLE `comentarios` (
   KEY `usuario_id` (`usuario_id`),
   CONSTRAINT `comentarios_ibfk_1` FOREIGN KEY (`plan_id`) REFERENCES `planes` (`id`) ON DELETE CASCADE,
   CONSTRAINT `comentarios_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `comentarios` (
 
 LOCK TABLES `comentarios` WRITE;
 /*!40000 ALTER TABLE `comentarios` DISABLE KEYS */;
-INSERT INTO `comentarios` VALUES (2,5,1,'de que hora estamos hablando','2025-05-09 02:06:25'),(3,5,2,'18:30 mas o menos','2025-05-09 02:07:15'),(4,1,4,'desde donde salimos','2025-05-09 02:39:34'),(5,1,1,'desde la catedral','2025-05-09 02:40:15'),(6,1,2,'perfecto','2025-05-09 02:40:40'),(7,1,1,'ok. nos vemos alli','2025-05-09 02:45:39'),(8,4,2,'me apunto','2025-05-09 23:08:07');
+INSERT INTO `comentarios` VALUES (2,5,1,'de que hora estamos hablando','2025-05-09 02:06:25'),(3,5,2,'18:30 mas o menos','2025-05-09 02:07:15'),(4,1,4,'desde donde salimos','2025-05-09 02:39:34'),(5,1,1,'desde la catedral','2025-05-09 02:40:15'),(6,1,2,'perfecto','2025-05-09 02:40:40'),(7,1,1,'ok. nos vemos alli','2025-05-09 02:45:39'),(8,4,2,'me apunto','2025-05-09 23:08:07'),(9,4,5,'yo tambien. ????','2025-05-09 23:41:30'),(10,4,1,'????','2025-05-09 23:42:16'),(11,4,1,'?','2025-05-09 23:46:04');
 /*!40000 ALTER TABLE `comentarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,4 +143,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-10  1:28:25
+-- Dump completed on 2025-05-10  1:47:31
