@@ -265,6 +265,14 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
                                         </form>
                                     </div>
                                 </div>
+                                <div class="card-footer bg-transparent border-0 text-end">
+                                    <a href="editar_plan.php?id=<?= $plan['id'] ?>" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit me-1"></i>Editar
+                                    </a>
+                                    <a href="anular_plan.php?id=<?= $plan['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas anular este plan?');">
+                                        <i class="fas fa-times-circle me-1"></i>Anular
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     <?php endforeach; ?>
