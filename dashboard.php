@@ -245,6 +245,17 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
                                                             <li class="text-muted">No hay comentarios aún.</li>
                                                         <?php endif; ?>
                                                     </ul>
+                                                    <!-- Formulario para agregar un nuevo comentario -->
+                                                    <div class="mt-3">
+                                                        <form action="agregar_comentario.php" method="POST">
+                                                            <div class="mb-3">
+                                                                <label for="comentario<?= $plan['id'] ?>" class="form-label">Añadir un comentario:</label>
+                                                                <textarea class="form-control" id="comentario<?= $plan['id'] ?>" name="comentario" rows="3" required></textarea>
+                                                            </div>
+                                                            <input type="hidden" name="plan_id" value="<?= $plan['id'] ?>">
+                                                            <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -253,25 +264,14 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
                                         </div>
                                     </div>
 
-                                    <!-- Formulario para agregar un nuevo comentario fuera del modal -->
-                                    <div class="mt-3">
-                                        <form action="agregar_comentario.php" method="POST">
-                                            <div class="mb-3">
-                                                <label for="comentario<?= $plan['id'] ?>" class="form-label">Añadir un comentario:</label>
-                                                <textarea class="form-control" id="comentario<?= $plan['id'] ?>" name="comentario" rows="3" required></textarea>
-                                            </div>
-                                            <input type="hidden" name="plan_id" value="<?= $plan['id'] ?>">
-                                            <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
-                                        </form>
+                                    <div class="card-footer bg-transparent border-0 text-end">
+                                        <a href="editar_plan.php?id=<?= $plan['id'] ?>" class="btn btn-warning btn-sm me-2">
+                                            <i class="fas fa-edit me-1"></i>Editar Plan
+                                        </a>
+                                        <a href="anular_plan.php?id=<?= $plan['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas anular este plan?');">
+                                            <i class="fas fa-times-circle me-1"></i>Anular Plan
+                                        </a>
                                     </div>
-                                </div>
-                                <div class="card-footer bg-transparent border-0 text-end">
-                                    <a href="editar_plan.php?id=<?= $plan['id'] ?>" class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit me-1"></i>Editar
-                                    </a>
-                                    <a href="anular_plan.php?id=<?= $plan['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas anular este plan?');">
-                                        <i class="fas fa-times-circle me-1"></i>Anular
-                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -307,8 +307,7 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
 
                                     <!-- Modal de descripción -->
                                     <div class="modal fade" id="modalDescripcionParticipante<?= $plan['id'] ?>" tabindex="-1"
-                                        aria-labelledby="modalDescripcionLabelParticipante<?= $plan['id'] ?>"
-                                        aria-hidden="true">
+                                        aria-labelledby="modalDescripcionLabelParticipante<?= $plan['id'] ?>" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -337,17 +336,17 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
 
                                     <!-- Botón para abrir el modal de comentarios -->
                                     <button type="button" class="btn btn-sm btn-outline-secondary mb-2" data-bs-toggle="modal"
-                                        data-bs-target="#modalComentarios<?= $plan['id'] ?>">
+                                        data-bs-target="#modalComentariosParticipante<?= $plan['id'] ?>">
                                         <i class="fas fa-comments me-1"></i>Ver comentarios
                                     </button>
 
                                     <!-- Modal de comentarios -->
-                                    <div class="modal fade" id="modalComentarios<?= $plan['id'] ?>" tabindex="-1"
-                                        aria-labelledby="modalComentariosLabel<?= $plan['id'] ?>" aria-hidden="true">
+                                    <div class="modal fade" id="modalComentariosParticipante<?= $plan['id'] ?>" tabindex="-1"
+                                        aria-labelledby="modalComentariosLabelParticipante<?= $plan['id'] ?>" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalComentariosLabel<?= $plan['id'] ?>">Comentarios del plan</h5>
+                                                    <h5 class="modal-title" id="modalComentariosLabelParticipante<?= $plan['id'] ?>">Comentarios del plan</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                                                 </div>
                                                 <div class="modal-body">
@@ -364,6 +363,17 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
                                                             <li class="text-muted">No hay comentarios aún.</li>
                                                         <?php endif; ?>
                                                     </ul>
+                                                    <!-- Formulario para agregar un nuevo comentario -->
+                                                    <div class="mt-3">
+                                                        <form action="agregar_comentario.php" method="POST">
+                                                            <div class="mb-3">
+                                                                <label for="comentarioParticipante<?= $plan['id'] ?>" class="form-label">Añadir un comentario:</label>
+                                                                <textarea class="form-control" id="comentarioParticipante<?= $plan['id'] ?>" name="comentario" rows="3" required></textarea>
+                                                            </div>
+                                                            <input type="hidden" name="plan_id" value="<?= $plan['id'] ?>">
+                                                            <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -372,17 +382,10 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
                                         </div>
                                     </div>
 
-                                    <!-- Formulario para agregar un nuevo comentario fuera del modal -->
-                                    <div class="mt-3">
-                                        <form action="agregar_comentario.php" method="POST">
-                                            <div class="mb-3">
-                                                <label for="comentario<?= $plan['id'] ?>" class="form-label">Añadir un comentario:</label>
-                                                <textarea class="form-control" id="comentario<?= $plan['id'] ?>" name="comentario" rows="3" required></textarea>
-                                            </div>
-                                            <input type="hidden" name="plan_id" value="<?= $plan['id'] ?>">
-                                            <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
-                                        </form>
-                                    </div>
+                                    <!-- Botón para anular participación -->
+                                    <a href="anular_participacion.php?id=<?= $plan['id'] ?>" class="btn btn-danger btn-sm float-end" onclick="return confirm('¿Estás seguro de que deseas anular tu participación en este plan?');">
+                                        <i class="fas fa-times-circle me-1"></i>Anular
+                                    </a>
                                 </div>
                             </div>
                         </div>
