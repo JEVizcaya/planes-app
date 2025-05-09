@@ -288,7 +288,7 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
                                         📅 <?= $plan['fecha'] ?><br>
                                         📍 <?= htmlspecialchars($plan['lugar']) ?><br>
                                         👥 <?= $plan['capacidad'] ?><br>
-                                        🧑‍💼 <?= htmlspecialchars($plan['creador_nombre']) ?>
+                                        🧑 <?= htmlspecialchars($plan['creador_nombre']) ?>
                                     </p>
 
                                     <!-- Botón para abrir el modal de descripción -->
@@ -398,7 +398,7 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
                                         📅 <?= $plan['fecha'] ?><br>
                                         📍 <?= htmlspecialchars($plan['lugar']) ?><br>
                                         👥 <?= $plan['capacidad'] ?><br>
-                                        🧑‍💼 <?= htmlspecialchars($plan['creador_nombre']) ?>
+                                        🧑 <?= htmlspecialchars($plan['creador_nombre']) ?>
                                     </p>
 
                                     <!-- Botón para abrir el modal de descripción -->
@@ -445,8 +445,8 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
         </section>
     </div>
 
-    <footer class="text-center py-3 text-muted">
-        &copy; <?= date('Y') ?> PlanesApp. Todos los derechos reservados.
+    <footer class="text-center py-3 text-white">
+        &copy; <?= date('Y') ?> ¿Quedamos?. Todos los derechos reservados.
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
