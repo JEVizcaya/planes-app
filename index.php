@@ -8,7 +8,7 @@ if (isset($_SESSION['user_id'])) {
 require 'includes/db.php';
 
 // Fetch all plans
-$stmt = $pdo->prepare('SELECT titulo, descripcion, fecha, lugar FROM planes');
+$stmt = $pdo->prepare('SELECT id, titulo, descripcion, fecha, lugar FROM planes');
 $stmt->execute();
 $planes = $stmt->fetchAll();
 ?>
@@ -18,53 +18,80 @@ $planes = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenido a PlanesApp</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>¿Quedamos?</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/index.css">
-    
 </head>
 <body>
 
-    <main>
-        <div class="hero-section bg-primary text-white">
-            <h1 class="display-4">Bienvenido a PlanesApp</h1>
-            <p class="lead">Conéctate con otros y comparte tus planes.</p>
-            <div class="mt-4">
-    <a href="login.php" class="btn btn-light btn-lg px-4 me-2 shadow-sm">Iniciar sesión</a>
-    <a href="register.php" class="btn btn-outline-light btn-lg px-4 shadow-sm">Registrarse</a>
-</div>
+    <!-- HERO SECTION -->
+    <section class="hero-section text-white d-flex align-items-center justify-content-center">
+        <div class="text-center">
+            <h1 class="display-3 fw-bold mb-3">¿Quedamos?</h1>
+            <p class="lead fs-4 mb-4">Descubre planes increíbles y conoce gente con tus mismos intereses.</p>
+            <div>
+                <a href="login.php" class="btn btn-light btn-lg me-2 shadow"><i class="fas fa-sign-in-alt me-1"></i> Iniciar sesión</a>
+                <a href="register.php" class="btn btn-outline-light btn-lg shadow"><i class="fas fa-user-plus me-1"></i> Registrarse</a>
+            </div>
         </div>
+    </section>
 
-        <div class="cards-container">
-            <h2 class="text-center text-secondary mb-4">Planes disponibles</h2>
+    <!-- PLANES DISPONIBLES -->
+    <section class="container my-5">
+        <h2 class="text-center text-acento mb-5">Planes disponibles</h2>
 
-            <?php if ($planes): ?>
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                    <?php foreach ($planes as $plan): ?>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-body">
-                                    <h5 class="card-title text-info"><?= htmlspecialchars($plan['titulo']) ?></h5>
-                                    <p class="card-text"><?= htmlspecialchars($plan['descripcion']) ?></p>
+        <?php if ($planes): ?>
+            <div class="row g-4 justify-content-center">
+                <?php foreach ($planes as $plan): ?>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 shadow-sm border-0">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary fw-bold"><?= htmlspecialchars($plan['titulo']) ?></h5>
+                                <p class="card-text"><?= htmlspecialchars(substr($plan['descripcion'], 0, 100)) ?>...</p>
+                                <!-- Botón para abrir el modal de descripción -->
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#modalDescripcion<?= $plan['id'] ?>">
+                                    <i class="fas fa-info-circle me-1"></i> Ver descripción
+                                </button>
+                            </div>
+                            <div class="card-footer bg-light text-muted small d-flex justify-content-between">
+                                <span><i class="far fa-calendar-alt me-1"></i><?= htmlspecialchars($plan['fecha']) ?></span>
+                                <span><i class="fas fa-map-marker-alt me-1"></i><?= htmlspecialchars($plan['lugar']) ?></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal de descripción -->
+                    <div class="modal fade" id="modalDescripcion<?= $plan['id'] ?>" tabindex="-1"
+                        aria-labelledby="modalDescripcionLabel<?= $plan['id'] ?>" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalDescripcionLabel<?= $plan['id'] ?>">Descripción del plan</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Cerrar"></button>
                                 </div>
-                                <div class="card-footer bg-light text-muted small">
-                                    <div>Fecha: <?= htmlspecialchars($plan['fecha']) ?></div>
-                                    <div>Lugar: <?= htmlspecialchars($plan['lugar']) ?></div>
+                                <div class="modal-body">
+                                    <?= nl2br(htmlspecialchars($plan['descripcion'])) ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                 </div>
                             </div>
                         </div>
-                    <?php endforeach; ?>
-                </div>
-            <?php else: ?>
-                <p class="text-center text-muted">No hay planes disponibles en este momento.</p>
-            <?php endif; ?>
-        </div>
-    </main>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <p class="text-center text-muted">No hay planes disponibles en este momento.</p>
+        <?php endif; ?>
+    </section>
 
-    <footer>
-        &copy; <?= date('Y') ?> PlanesApp. Todos los derechos reservados.
+    <footer class="footer">
+        &copy; <?= date('Y') ?> ¿Quedamos? Todos los derechos reservados.
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

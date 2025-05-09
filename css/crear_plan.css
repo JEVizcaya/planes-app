@@ -1,0 +1,87 @@
+:root {
+    --principal: #6C63FF;
+    --acento: #FF6B6B;
+    --claro: #F9F9F9;
+    --oscuro: #2F2F2F;
+}
+
+body.login-page {
+    background: linear-gradient(135deg, var(--principal), var(--acento));
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-register-bg {
+    background-color: #f4f7fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.form-input {
+    border-radius: 0.375rem;
+    box-shadow: none;
+}
+
+.form-control {
+    padding: 0.75rem;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+    font-size: 1rem;
+}
+
+.btn-outline-secondary:hover {
+    color: #fff;
+    background-color: #6c757d;
+}
+
+.alert {
+    border-radius: 0.375rem;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.d-grid {
+    display: grid;
+}
+
+.mb-3 {
+    margin-bottom: 1rem;
+}

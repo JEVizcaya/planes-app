@@ -1,65 +1,50 @@
+:root {
+    --principal: #6C63FF;
+    --secundario: #FFC947;
+    --acento: #FF6B6B;
+    --claro: #F9F9F9;
+    --oscuro: #2F2F2F;
+}
+
 body {
-    min-height: 100vh;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(to bottom right, #f0f8ff, #ffffff);
+    background-color: #1783dc61;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
 }
 
-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
+/* Sección Hero */
 .hero-section {
+    background: linear-gradient(135deg, var(--principal), var(--acento));
+    min-height: 30vh;
+    padding: 40px 20px;
     text-align: center;
-    padding: 4rem 1rem;
-    background: linear-gradient(90deg, #007bff, #00bcd4);
-    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.hero-section h1 {
-    font-weight: 700;
-}
-
-.hero-section .btn {
-    min-width: 160px;
-    font-weight: 500;
-    border-radius: 8px;
-    transition: all 0.3s ease-in-out;
-}
-
-.hero-section .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-.cards-container {
-    padding: 2rem 4vw;
+/* Título y botón */
+.text-acento {
+    color: var(--principal);
 }
 
 .card {
-    transition: transform 0.2s ease-in-out;
-    border: none;
+    transition: transform 0.2s;
+    border-radius: 12px;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    transform: scale(1.03);
 }
 
 .card-footer {
-    background-color: #f8f9fa;
-    color: #6c757d;
-    font-size: 0.9rem;
+    border-top: none;
 }
 
-footer {
+/* Footer */
+.footer {
+    background-color: var(--principal);
+    color: white;
     text-align: center;
-    padding: 1rem;
-    background-color: #f8f9fa;
-    color: #6c757d;
+    padding: 20px 0;
 }

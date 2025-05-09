@@ -31,7 +31,7 @@ CREATE TABLE `participantes` (
   KEY `plan_id` (`plan_id`),
   CONSTRAINT `participantes_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
   CONSTRAINT `participantes_ibfk_2` FOREIGN KEY (`plan_id`) REFERENCES `planes` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,6 @@ CREATE TABLE `participantes` (
 
 LOCK TABLES `participantes` WRITE;
 /*!40000 ALTER TABLE `participantes` DISABLE KEYS */;
-INSERT INTO `participantes` VALUES (4,1,4),(3,2,3),(5,3,3),(6,3,4);
 /*!40000 ALTER TABLE `participantes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +61,7 @@ CREATE TABLE `planes` (
   PRIMARY KEY (`id`),
   KEY `creador_id` (`creador_id`),
   CONSTRAINT `planes_ibfk_1` FOREIGN KEY (`creador_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +70,6 @@ CREATE TABLE `planes` (
 
 LOCK TABLES `planes` WRITE;
 /*!40000 ALTER TABLE `planes` DISABLE KEYS */;
-INSERT INTO `planes` VALUES (3,'Ruta Senderismo','Paseo agradable por la Senda del Agua con pausa para el desayuno y vistas a la Ría inmejorables','2025-05-10','Vigo',13,1),(4,'Partidillo Veteranos','Pachanga de viejas glorias venidas a menos','2025-05-11','Vigo',8,2);
 /*!40000 ALTER TABLE `planes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,11 +82,13 @@ DROP TABLE IF EXISTS `usuarios`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  `apellidos` varchar(150) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +97,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'j@j.com','$2y$10$UNOJG8zWvRIFs2t/N0ViWe/l8qV2bEB1AA4Msyyv7tWCdewYuuXFq'),(2,'e@e.com','$2y$10$gI5f4NDANtOJl7FHQ23NeOlU1CtI.rYqx5orUREHn1U2xC47m8yG2'),(3,'je@je.com','$2y$10$J.8zzfBfrdELAU2I/.IXZe5ToOfUmhmEVBBxMWkl39P/avnYWYhx6');
+INSERT INTO `usuarios` VALUES (1,'Jorge','Vizcaya','jorge@gmail.com','$2y$10$9TC63Tukkt1FlW8B5h1dP.RqoGVvLx.qCMMm5I6bCz8vvyOR5lg.m');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -110,4 +110,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-08 19:12:14
+-- Dump completed on 2025-05-08 23:53:57

@@ -34,54 +34,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Crear Plan</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/login_register.css"> <!-- Aquí debe estar el archivo CSS que contiene los estilos -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap & Estilos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/crear_plan.css"> <!-- Aquí debe estar el archivo CSS que contiene los estilos -->
 </head>
-<body class="crear-plan-page">
+<body class="login-page d-flex align-items-center justify-content-center">
 
-    <main class="form-container">
-        <h2 class="text-center mb-4">Crear nuevo plan</h2>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="card mt-5 shadow-sm border-0 rounded-4">
+                    <div class="card-body p-5">
+                        <h2 class="text-center mb-4">Crear un nuevo plan</h2>
 
-        <div class="text-center mb-4">
-            <a href="dashboard.php" class="btn btn-outline-secondary">← Volver al panel</a>
+                        <div class="text-center mb-4">
+                            <a href="dashboard.php" class="btn btn-outline-secondary">← Volver al panel</a>
+                        </div>
+
+                        <?php if (!empty($errors)): ?>
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    <?php foreach ($errors as $error): ?>
+                                        <li><?= htmlspecialchars($error) ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
+
+                        <form method="POST">
+                            <div class="mb-3">
+                                <label class="form-label">Título</label>
+                                <input type="text" name="titulo" class="form-control form-input" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Descripción</label>
+                                <textarea name="descripcion" class="form-control form-input" rows="3" required></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Fecha</label>
+                                <input type="date" name="fecha" class="form-control form-input" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Lugar</label>
+                                <input type="text" name="lugar" class="form-control form-input" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Capacidad</label>
+                                <input type="number" name="capacidad" class="form-control form-input" min="1" required>
+                            </div>
+
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">Crear plan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <?php if (!empty($errors)): ?>
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    <?php foreach ($errors as $error): ?>
-                        <li><?= htmlspecialchars($error) ?></li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        <?php endif; ?>
-
-        <form method="POST">
-            <div class="mb-3">
-                <label class="form-label">Título</label>
-                <input type="text" name="titulo" class="form-control form-input" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Descripción</label>
-                <textarea name="descripcion" class="form-control form-input" rows="3" required></textarea>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Fecha</label>
-                <input type="date" name="fecha" class="form-control form-input" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Lugar</label>
-                <input type="text" name="lugar" class="form-control form-input" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Capacidad</label>
-                <input type="number" name="capacidad" class="form-control form-input" min="1" required>
-            </div>
-            <div class="d-grid gap-2 mt-4">
-                <button type="submit" class="btn btn-primary btn-lg">Crear plan</button>
-            </div>
-        </form>
-    </main>
+    </div>
 
 </body>
 </html>
