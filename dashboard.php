@@ -45,6 +45,14 @@ foreach ($mis_planes as $plan) {
     $stmt_part->execute([$plan['id']]);
     $participantes_por_plan[$plan['id']] = $stmt_part->fetchAll(PDO::FETCH_ASSOC);
 }
+
+// Obtener comentarios para cada plan
+$comentarios_por_plan = [];
+foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
+    $stmt_comentarios = $pdo->prepare('SELECT c.*, u.nombre FROM comentarios c JOIN usuarios u ON c.usuario_id = u.id WHERE c.plan_id = ? ORDER BY c.fecha DESC');
+    $stmt_comentarios->execute([$plan['id']]);
+    $comentarios_por_plan[$plan['id']] = $stmt_comentarios->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 <!DOCTYPE html>
@@ -172,6 +180,49 @@ foreach ($mis_planes as $plan) {
                                             </div>
                                         </div>
                                     <?php endif; ?>
+
+                                    <!-- Mostrar número de comentarios en lugar de los comentarios directamente -->
+                                    <p class="text-muted small mb-1">
+                                        <i class="fas fa-comments me-1"></i>
+                                        <?= count($comentarios_por_plan[$plan['id']] ?? []) ?> comentario<?= count($comentarios_por_plan[$plan['id']] ?? []) !== 1 ? 's' : '' ?>
+                                    </p>
+
+                                    <!-- Botón para abrir el modal de comentarios -->
+                                    <button type="button" class="btn btn-sm btn-outline-secondary mb-2" data-bs-toggle="modal"
+                                        data-bs-target="#modalComentarios<?= $plan['id'] ?>">
+                                        <i class="fas fa-comments me-1"></i>Ver comentarios
+                                    </button>
+
+                                    <!-- Modal de comentarios -->
+                                    <div class="modal fade" id="modalComentarios<?= $plan['id'] ?>" tabindex="-1"
+                                        aria-labelledby="modalComentariosLabel<?= $plan['id'] ?>" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalComentariosLabel<?= $plan['id'] ?>">Comentarios del plan</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="list-unstyled">
+                                                        <?php if (!empty($comentarios_por_plan[$plan['id']])): ?>
+                                                            <?php foreach ($comentarios_por_plan[$plan['id']] as $comentario): ?>
+                                                                <li class="mb-2">
+                                                                    <strong><?= htmlspecialchars($comentario['nombre']) ?>:</strong>
+                                                                    <p class="mb-0 small text-muted">"<?= htmlspecialchars($comentario['comentario']) ?>"</p>
+                                                                    <small class="text-muted">Publicado el <?= $comentario['fecha'] ?></small>
+                                                                </li>
+                                                            <?php endforeach; ?>
+                                                        <?php else: ?>
+                                                            <li class="text-muted">No hay comentarios aún.</li>
+                                                        <?php endif; ?>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -224,6 +275,49 @@ foreach ($mis_planes as $plan) {
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Cerrar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mostrar número de comentarios en lugar de los comentarios directamente -->
+                                    <p class="text-muted small mb-1">
+                                        <i class="fas fa-comments me-1"></i>
+                                        <?= count($comentarios_por_plan[$plan['id']] ?? []) ?> comentario<?= count($comentarios_por_plan[$plan['id']] ?? []) !== 1 ? 's' : '' ?>
+                                    </p>
+
+                                    <!-- Botón para abrir el modal de comentarios -->
+                                    <button type="button" class="btn btn-sm btn-outline-secondary mb-2" data-bs-toggle="modal"
+                                        data-bs-target="#modalComentarios<?= $plan['id'] ?>">
+                                        <i class="fas fa-comments me-1"></i>Ver comentarios
+                                    </button>
+
+                                    <!-- Modal de comentarios -->
+                                    <div class="modal fade" id="modalComentarios<?= $plan['id'] ?>" tabindex="-1"
+                                        aria-labelledby="modalComentariosLabel<?= $plan['id'] ?>" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalComentariosLabel<?= $plan['id'] ?>">Comentarios del plan</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="list-unstyled">
+                                                        <?php if (!empty($comentarios_por_plan[$plan['id']])): ?>
+                                                            <?php foreach ($comentarios_por_plan[$plan['id']] as $comentario): ?>
+                                                                <li class="mb-2">
+                                                                    <strong><?= htmlspecialchars($comentario['nombre']) ?>:</strong>
+                                                                    <p class="mb-0 small text-muted">"<?= htmlspecialchars($comentario['comentario']) ?>"</p>
+                                                                    <small class="text-muted">Publicado el <?= $comentario['fecha'] ?></small>
+                                                                </li>
+                                                            <?php endforeach; ?>
+                                                        <?php else: ?>
+                                                            <li class="text-muted">No hay comentarios aún.</li>
+                                                        <?php endif; ?>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                                 </div>
                                             </div>
                                         </div>

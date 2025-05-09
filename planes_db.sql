@@ -16,6 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `comentarios`
+--
+
+DROP TABLE IF EXISTS `comentarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `comentarios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plan_id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `comentario` text NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `plan_id` (`plan_id`),
+  KEY `usuario_id` (`usuario_id`),
+  CONSTRAINT `comentarios_ibfk_1` FOREIGN KEY (`plan_id`) REFERENCES `planes` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `comentarios_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comentarios`
+--
+
+LOCK TABLES `comentarios` WRITE;
+/*!40000 ALTER TABLE `comentarios` DISABLE KEYS */;
+INSERT INTO `comentarios` VALUES (2,5,1,'de que hora estamos hablando','2025-05-09 02:06:25'),(3,5,2,'18:30 mas o menos','2025-05-09 02:07:15');
+/*!40000 ALTER TABLE `comentarios` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `participantes`
 --
 
@@ -31,7 +62,7 @@ CREATE TABLE `participantes` (
   KEY `plan_id` (`plan_id`),
   CONSTRAINT `participantes_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
   CONSTRAINT `participantes_ibfk_2` FOREIGN KEY (`plan_id`) REFERENCES `planes` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +71,7 @@ CREATE TABLE `participantes` (
 
 LOCK TABLES `participantes` WRITE;
 /*!40000 ALTER TABLE `participantes` DISABLE KEYS */;
+INSERT INTO `participantes` VALUES (28,1,5);
 /*!40000 ALTER TABLE `participantes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +93,7 @@ CREATE TABLE `planes` (
   PRIMARY KEY (`id`),
   KEY `creador_id` (`creador_id`),
   CONSTRAINT `planes_ibfk_1` FOREIGN KEY (`creador_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,6 +102,7 @@ CREATE TABLE `planes` (
 
 LOCK TABLES `planes` WRITE;
 /*!40000 ALTER TABLE `planes` DISABLE KEYS */;
+INSERT INTO `planes` VALUES (1,'Caminata por el Monte do Gozo','Acompáñanos a una caminata por el Monte do Gozo, una de las rutas más emblemáticas del Camino de Santiago. Será una oportunidad para disfrutar de la naturaleza, hacer ejercicio y compartir un día de buena compañía. Todos los niveles son bienvenidos.','2025-05-11','Santiago de Compostela',10,1),(2,'Tarde de juegos de mesa en el centro cultural','Ven a pasar una tarde divertida con juegos de mesa clásicos y modernos. Ideal para conocer gente nueva, relajarse y echar unas risas. ¡No hace falta traer nada, solo ganas de jugar!','2025-05-14','Calle Policarpo Sanz, 21 - 2ª. Vigo.',15,1),(3,'Picnic al atardecer en la playa de Samil','Organizamos un picnic para ver el atardecer en la playa de Samil. Cada persona puede llevar algo para compartir. Llévate tu toalla o manta, y prepárate para una tarde de desconexión junto al mar.','2025-05-17','Playa de Samil. Vigo',20,1),(4,'Ruta de tapas por el Casco Vello','Recorreremos algunos bares emblemáticos del Casco Vello para probar sus mejores tapas. Una buena forma de disfrutar la gastronomía local y hacer nuevos amigos en un ambiente relajado.','2025-05-18','Praza da iglesia, 3, Vigo, Pontevedra',10,1),(5,'Partido de fútbol entre amigos','¿Te apetece echar un partidillo de fútbol con buen ambiente? Hemos reservado el Campo de Fútbol Municipal Monte da Mina en Castrelos. No importa el nivel, solo las ganas de pasarlo bien. Después del partido, podemos ir a tomar algo por la zona.','2025-05-16','Camiño Galindra, s/n - Castrelos - Vigo',19,2),(8,'gadgadfg','agadfgadfgadgdfgaf','2025-05-22','Vigo',0,4);
 /*!40000 ALTER TABLE `planes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,7 +121,7 @@ CREATE TABLE `usuarios` (
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +130,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Jorge','Vizcaya','jorge@gmail.com','$2y$10$9TC63Tukkt1FlW8B5h1dP.RqoGVvLx.qCMMm5I6bCz8vvyOR5lg.m');
+INSERT INTO `usuarios` VALUES (1,'Jorge','Vizcaya','jorge@gmail.com','$2y$10$9TC63Tukkt1FlW8B5h1dP.RqoGVvLx.qCMMm5I6bCz8vvyOR5lg.m'),(2,'Enrique','Vega','enrique@gmail.com','$2y$10$CRkm9XD7b03MKe.Kh9UwD.nY51fhZuwobLTDfd17RkAXxgnjrPixS'),(3,'Jorge Enrique','Vizcaya Vega','je@gmail.com','$2y$10$IzkJ6H5HRFTSm8TN2d94geeZW0WmZgq.upA9r7bniEsQpFh5ANtH2'),(4,'Pepe','Pérez','pepe@gmail.com','$2y$10$3GjGjVb595nO/KmJiqQAnetmOaXCj0R6PmZlhfkj3l9ljc5eQuZeG');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -110,4 +143,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-08 23:53:57
+-- Dump completed on 2025-05-09  4:15:30
