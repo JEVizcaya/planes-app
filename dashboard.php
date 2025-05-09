@@ -29,8 +29,9 @@ $stmt2 = $pdo->prepare('SELECT p.*, u.nombre AS creador_nombre FROM planes p
 $stmt2->execute([$user_id]);
 $planes_apuntado = $stmt2->fetchAll();
 
-// Obtener los planes disponibles para unirse
-$stmt3 = $pdo->prepare('SELECT p.* FROM planes p
+// Modificar la consulta SQL para incluir el nombre del creador
+$stmt3 = $pdo->prepare('SELECT p.*, u.nombre AS creador_nombre FROM planes p
+                        JOIN usuarios u ON p.creador_id = u.id
                         WHERE p.creador_id != ? AND p.id NOT IN (
                             SELECT plan_id FROM participantes WHERE usuario_id = ? 
                         )');
@@ -76,98 +77,110 @@ foreach ($mis_planes as $plan) {
     </section>
 
     <div class="container pb-5">
-    <section class="mb-5">
-    <h2 class="section-title mb-3">Mis planes creados</h2>
-    <?php if ($mis_planes): ?>
-        <div class="row g-4">
-            <?php foreach ($mis_planes as $plan): ?>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title"><?= htmlspecialchars($plan['titulo']) ?></h5>
-                            <p class="text-muted small mb-1">
-                                <strong>📅 Fecha:</strong> <?= $plan['fecha'] ?><br>
-                                <strong>📍 Lugar:</strong> <?= htmlspecialchars($plan['lugar']) ?><br>
-                                <strong>👥 Capacidad:</strong> <?= $plan['capacidad'] ?>
-                            </p>
+        <?php if (isset($_GET['error'])): ?>
+            <div class="alert alert-danger text-center">
+                <?php if ($_GET['error'] == 'no_capacity'): ?>
+                    Este plan ya no tiene capacidad disponible.
+                <?php elseif ($_GET['error'] == 'already_joined'): ?>
+                    Ya estás apuntado a este plan.
+                <?php elseif ($_GET['error'] == 'plan_not_found'): ?>
+                    El plan no existe.
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
 
-                            <!-- Botón para abrir el modal de descripción -->
-                            <button type="button" class="btn btn-sm btn-outline-secondary mb-2" data-bs-toggle="modal"
-                                data-bs-target="#modalDescripcion<?= $plan['id'] ?>">
-                                <i class="fas fa-info-circle me-1"></i>Ver descripción
-                            </button>
+        <section class="mb-5">
+            <h2 class="section-title mb-3">Mis planes creados</h2>
+            <?php if ($mis_planes): ?>
+                <div class="row g-4">
+                    <?php foreach ($mis_planes as $plan): ?>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?= htmlspecialchars($plan['titulo']) ?></h5>
+                                    <p class="text-muted small mb-1">
+                                        <strong>📅 Fecha:</strong> <?= $plan['fecha'] ?><br>
+                                        <strong>📍 Lugar:</strong> <?= htmlspecialchars($plan['lugar']) ?><br>
+                                        <strong>👥 Capacidad:</strong> <?= $plan['capacidad'] ?>
+                                    </p>
 
-                            <!-- Modal de descripción -->
-                            <div class="modal fade" id="modalDescripcion<?= $plan['id'] ?>" tabindex="-1"
-                                aria-labelledby="modalDescripcionLabel<?= $plan['id'] ?>" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="modalDescripcionLabel<?= $plan['id'] ?>">
-                                                Descripción del plan</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Cerrar"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <?= nl2br(htmlspecialchars($plan['descripcion'])) ?>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Cerrar</button>
+                                    <!-- Botón para abrir el modal de descripción -->
+                                    <button type="button" class="btn btn-sm btn-outline-secondary mb-2" data-bs-toggle="modal"
+                                        data-bs-target="#modalDescripcion<?= $plan['id'] ?>">
+                                        <i class="fas fa-info-circle me-1"></i>Ver descripción
+                                    </button>
+
+                                    <!-- Modal de descripción -->
+                                    <div class="modal fade" id="modalDescripcion<?= $plan['id'] ?>" tabindex="-1"
+                                        aria-labelledby="modalDescripcionLabel<?= $plan['id'] ?>" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalDescripcionLabel<?= $plan['id'] ?>">
+                                                        Descripción del plan</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Cerrar"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <?= nl2br(htmlspecialchars($plan['descripcion'])) ?>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cerrar</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <hr>
+                                    <p class="mb-1"><strong>Participantes:</strong></p>
+                                    <?php 
+                                        $num_participantes = !empty($participantes_por_plan[$plan['id']]) ? count($participantes_por_plan[$plan['id']]) : 0;
+                                    ?>
+                                    <p class="text-muted small mb-1"><?= $num_participantes ?> participante<?= $num_participantes > 1 ? 's' : '' ?></p>
+
+                                    <!-- Botón para abrir el modal de participantes -->
+                                    <?php if ($num_participantes > 0): ?>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary mb-2" data-bs-toggle="modal"
+                                            data-bs-target="#modalParticipantes<?= $plan['id'] ?>">
+                                            <i class="fas fa-users me-1"></i>Ver participantes
+                                        </button>
+                                    <?php endif; ?>
+
+                                    <!-- Modal de participantes -->
+                                    <?php if ($num_participantes > 0): ?>
+                                        <div class="modal fade" id="modalParticipantes<?= $plan['id'] ?>" tabindex="-1"
+                                            aria-labelledby="modalParticipantesLabel<?= $plan['id'] ?>" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="modalParticipantesLabel<?= $plan['id'] ?>">Participantes del plan</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Cerrar"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <ul class="list-unstyled">
+                                                            <?php foreach ($participantes_por_plan[$plan['id']] as $participante): ?>
+                                                                <li><?= htmlspecialchars($participante['nombre'] . ' ' . $participante['apellidos']) ?></li>
+                                                            <?php endforeach; ?>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
-
-                            <hr>
-                            <p class="mb-1"><strong>Participantes:</strong></p>
-                            <?php 
-                                $num_participantes = !empty($participantes_por_plan[$plan['id']]) ? count($participantes_por_plan[$plan['id']]) : 0;
-                            ?>
-                            <p class="text-muted small mb-1"><?= $num_participantes ?> participante<?= $num_participantes > 1 ? 's' : '' ?></p>
-
-                            <!-- Botón para abrir el modal de participantes -->
-                            <?php if ($num_participantes > 0): ?>
-                                <button type="button" class="btn btn-sm btn-outline-secondary mb-2" data-bs-toggle="modal"
-                                    data-bs-target="#modalParticipantes<?= $plan['id'] ?>">
-                                    <i class="fas fa-users me-1"></i>Ver participantes
-                                </button>
-                            <?php endif; ?>
-
-                            <!-- Modal de participantes -->
-                            <?php if ($num_participantes > 0): ?>
-                                <div class="modal fade" id="modalParticipantes<?= $plan['id'] ?>" tabindex="-1"
-                                    aria-labelledby="modalParticipantesLabel<?= $plan['id'] ?>" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="modalParticipantesLabel<?= $plan['id'] ?>">Participantes del plan</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Cerrar"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <ul class="list-unstyled">
-                                                    <?php foreach ($participantes_por_plan[$plan['id']] as $participante): ?>
-                                                        <li><?= htmlspecialchars($participante['nombre'] . ' ' . $participante['apellidos']) ?></li>
-                                                    <?php endforeach; ?>
-                                                </ul>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
                         </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
-            <?php endforeach; ?>
-        </div>
-    <?php else: ?>
-        <p class="text-muted">No has creado ningún plan aún.</p>
-    <?php endif; ?>
-</section>
+            <?php else: ?>
+                <p class="text-muted">No has creado ningún plan aún.</p>
+            <?php endif; ?>
+        </section>
 
 
         <section class="mb-5">
@@ -237,7 +250,8 @@ foreach ($mis_planes as $plan) {
                                     <p class="text-muted small">
                                         📅 <?= $plan['fecha'] ?><br>
                                         📍 <?= htmlspecialchars($plan['lugar']) ?><br>
-                                        👥 <?= $plan['capacidad'] ?>
+                                        👥 <?= $plan['capacidad'] ?><br>
+                                        🧑‍💼 <?= htmlspecialchars($plan['creador_nombre']) ?>
                                     </p>
 
                                     <!-- Botón para abrir el modal de descripción -->
@@ -289,6 +303,19 @@ foreach ($mis_planes as $plan) {
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Desaparecer alertas después de 3 segundos
+            setTimeout(() => {
+                const alert = document.querySelector('.alert');
+                if (alert) {
+                    alert.style.transition = 'opacity 0.5s';
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 500);
+                }
+            }, 3000);
+        });
+    </script>
 </body>
 
 </html>

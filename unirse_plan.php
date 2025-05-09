@@ -17,6 +17,16 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 
 $plan_id = $_GET['id'];
 
+// Verificar si el plan existe antes de continuar
+$stmt = $pdo->prepare('SELECT * FROM planes WHERE id = ?');
+$stmt->execute([$plan_id]);
+$plan = $stmt->fetch();
+
+if (!$plan) {
+    header('Location: dashboard.php?error=plan_not_found');
+    exit;
+}
+
 // Check if the user is already a participant in the plan
 $stmt = $pdo->prepare('SELECT * FROM participantes WHERE usuario_id = ? AND plan_id = ?');
 $stmt->execute([$user_id, $plan_id]);
@@ -32,6 +42,7 @@ $stmt = $pdo->prepare('SELECT capacidad FROM planes WHERE id = ?');
 $stmt->execute([$plan_id]);
 $plan = $stmt->fetch();
 
+// Asegurarse de que el parámetro de error se pase correctamente en la redirección
 if (!$plan || $plan['capacidad'] <= 0) {
     header('Location: dashboard.php?error=no_capacity');
     exit;
@@ -46,7 +57,7 @@ $stmt = $pdo->prepare('INSERT INTO participantes (usuario_id, plan_id) VALUES (?
 $stmt->execute([$user_id, $plan_id]);
 
 header('Location: dashboard.php?success=joined');
-exit;
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -71,7 +82,7 @@ exit;
                             <div class="alert alert-danger">Ya estás apuntado a este plan.</div>
                         <?php endif; ?>
 
-                        <!-- Mostrar mensaje si no hay capacidad -->
+                        <!-- Asegurarse de que el mensaje de error se muestre correctamente -->
                         <?php if (isset($_GET['error']) && $_GET['error'] == 'no_capacity'): ?>
                             <div class="alert alert-warning">Este plan ya no tiene capacidad disponible.</div>
                         <?php endif; ?>
