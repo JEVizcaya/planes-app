@@ -384,7 +384,7 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
 
                                     <!-- Botón para anular participación -->
                                     <a href="anular_participacion.php?id=<?= $plan['id'] ?>" class="btn btn-danger btn-sm float-end" onclick="return confirm('¿Estás seguro de que deseas anular tu participación en este plan?');">
-                                        <i class="fas fa-times-circle me-1"></i>Anular
+                                        <i class="fas fa-times-circle me-1"></i>Anular Participación
                                     </a>
                                 </div>
                             </div>
