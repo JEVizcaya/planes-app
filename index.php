@@ -31,8 +31,8 @@ $planes = $stmt->fetchAll();
             <h1 class="display-3 fw-bold mb-3">¿Quedamos?</h1>
             <p class="lead fs-4 mb-4">Descubre planes increíbles y conoce gente con tus mismos intereses.</p>
             <div>
-                <a href="login.php" class="btn btn-light btn-lg me-2 shadow"><i class="fas fa-sign-in-alt me-1"></i> Iniciar sesión</a>
-                <a href="register.php" class="btn btn-outline-light btn-lg shadow"><i class="fas fa-user-plus me-1"></i> Registrarse</a>
+                <a href="login.php" class="btn btn-light btn-lg me-2 mb-2 d-md-inline-block mb-md-0 shadow"><i class="fas fa-sign-in-alt me-1"></i> Iniciar sesión</a>
+                <a href="register.php" class="btn btn-outline-light btn-lg d-md-inline-block shadow"><i class="fas fa-user-plus me-1"></i> Registrarse</a>
             </div>
         </div>
     </section>
