@@ -223,6 +223,18 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- Formulario para agregar un nuevo comentario fuera del modal -->
+                                    <div class="mt-3">
+                                        <form action="agregar_comentario.php" method="POST">
+                                            <div class="mb-3">
+                                                <label for="comentario<?= $plan['id'] ?>" class="form-label">Añadir un comentario:</label>
+                                                <textarea class="form-control" id="comentario<?= $plan['id'] ?>" name="comentario" rows="3" required></textarea>
+                                            </div>
+                                            <input type="hidden" name="plan_id" value="<?= $plan['id'] ?>">
+                                            <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -321,6 +333,18 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <!-- Formulario para agregar un nuevo comentario fuera del modal -->
+                                    <div class="mt-3">
+                                        <form action="agregar_comentario.php" method="POST">
+                                            <div class="mb-3">
+                                                <label for="comentario<?= $plan['id'] ?>" class="form-label">Añadir un comentario:</label>
+                                                <textarea class="form-control" id="comentario<?= $plan['id'] ?>" name="comentario" rows="3" required></textarea>
+                                            </div>
+                                            <input type="hidden" name="plan_id" value="<?= $plan['id'] ?>">
+                                            <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
