@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Obtener los datos del usuario (nombre y apellidos)
-$stmt_user = $pdo->prepare('SELECT nombre, apellidos FROM usuarios WHERE id = ?');
+$stmt_user = $pdo->prepare('SELECT nombre, apellidos, email FROM usuarios WHERE id = ?');
 $stmt_user->execute([$user_id]);
 $usuario = $stmt_user->fetch();
 
@@ -77,38 +77,16 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
             <p class="lead">¡Hola <?= $nombre_completo ?>! Gestiona tus planes desde aquí.</p>
             <div class="d-flex justify-content-center flex-wrap gap-2 mt-4">
                 <a href="crear_plan.php" class="btn btn-light btn-lg"><i class="fas fa-plus-circle me-1"></i>Crear plan</a>
-                <a href="logout.php" class="btn btn-outline-light btn-lg"><i class="fas fa-sign-out-alt me-1"></i>Salir</a>
-                <a href="editar_perfil.php" class="btn btn-outline-light btn-lg">
-                    <i class="fas fa-user-edit me-1"></i>Editar perfil
-                </a>
-            </div>
-
-            <!-- Modal para editar perfil -->
-            <div class="modal fade" id="editarPerfilModal" tabindex="-1" aria-labelledby="editarPerfilModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editarPerfilModalLabel">Editar perfil</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                        </div>
-                        <form action="editar_perfil.php" method="POST">
-                            <div class="modal-body">
-                                <div class="mb-3">
-                                    <label for="nombre" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" value="<?= htmlspecialchars($usuario['nombre']) ?>" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="apellidos" class="form-label">Apellidos</label>
-                                    <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?= htmlspecialchars($usuario['apellidos']) ?>" required>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                            </div>
-                        </form>
-                    </div>
+                <div class="dropdown">
+                    <button class="btn btn-outline-light btn-lg dropdown-toggle" type="button" id="perfilDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user me-1"></i>Perfil
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="perfilDropdown">
+                        <li><a class="dropdown-item" href="ver_perfil.php">Ver perfil</a></li>
+                        <li><a class="dropdown-item" href="editar_perfil.php">Editar perfil</a></li>
+                    </ul>
                 </div>
+                <a href="logout.php" class="btn btn-outline-light btn-lg"><i class="fas fa-sign-out-alt me-1"></i>Salir</a>
             </div>
         </div>
     </section>

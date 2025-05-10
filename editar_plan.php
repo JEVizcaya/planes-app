@@ -50,6 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Editar Plan</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/login_register.css">
+    <link rel="stylesheet" href="css/ver_perfil.css">
+    <style>
+        body {
+            padding: 20px 0;
+        }
+    </style>
 </head>
 <body>
     <div class="container py-5">
