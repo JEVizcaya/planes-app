@@ -50,10 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="card-body p-5">
                         <h2 class="text-center mb-4">Crear un nuevo plan</h2>
 
-                        <div class="text-center mb-4">
-                            <a href="dashboard.php" class="btn btn-outline-secondary">← Volver al panel</a>
-                        </div>
-
                         <?php if (!empty($errors)): ?>
                             <div class="alert alert-danger">
                                 <ul class="mb-0">
@@ -92,6 +88,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <div class="d-grid gap-2 mt-4">
                                 <button type="submit" class="btn btn-primary btn-lg">Crear plan</button>
+                            </div>
+
+                            <div class="d-grid gap-2 mt-3">
+                                <a href="dashboard.php" class="btn btn-primary btn-lg">Cancelar</a>
                             </div>
                         </form>
                     </div>
