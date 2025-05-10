@@ -67,6 +67,24 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/dashboard.css">
+
+    <style>
+        @keyframes disintegrate {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-50px);
+                filter: blur(5px);
+            }
+        }
+
+        .disintegrate {
+            animation: disintegrate 1s forwards;
+        }
+    </style>
 </head>
 
 <body>
@@ -246,7 +264,7 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
                                         <a href="editar_plan.php?id=<?= $plan['id'] ?>" class="btn btn-warning btn-sm me-2">
                                             <i class="fas fa-edit me-1"></i>Editar Plan
                                         </a>
-                                        <a href="anular_plan.php?id=<?= $plan['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas anular este plan?');">
+                                        <a href="anular_plan.php?id=<?= $plan['id'] ?>" class="btn btn-danger btn-sm btn-anular-plan">
                                             <i class="fas fa-times-circle me-1"></i>Anular Plan
                                         </a>
                                     </div>
@@ -329,39 +347,14 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
                                                 </div>
                                                 <div class="modal-body">
                                                     <ul class="list-unstyled">
-                                                        <?php if (!empty($comentarios_por_plan[$plan['id']])): ?>
-                                                            <?php foreach ($comentarios_por_plan[$plan['id']] as $comentario): ?>
-                                                                <li class="mb-2">
-                                                                    <strong><?= htmlspecialchars($comentario['nombre']) ?>:</strong>
-                                                                    <p class="mb-0 small text-muted">"<?= htmlspecialchars($comentario['comentario']) ?>"</p>
-                                                                    <small class="text-muted">Publicado el <?= $comentario['fecha'] ?></small>
-                                                                </li>
-                                                            <?php endforeach; ?>
-                                                        <?php else: ?>
-                                                            <li class="text-muted">No hay comentarios aún.</li>
-                                                        <?php endif; ?>
                                                     </ul>
-                                                    <!-- Formulario para agregar un nuevo comentario -->
-                                                    <div class="mt-3">
-                                                        <form action="agregar_comentario.php" method="POST">
-                                                            <div class="mb-3">
-                                                                <label for="comentarioParticipante<?= $plan['id'] ?>" class="form-label">Añadir un comentario:</label>
-                                                                <textarea class="form-control" id="comentarioParticipante<?= $plan['id'] ?>" name="comentario" rows="3" required></textarea>
-                                                            </div>
-                                                            <input type="hidden" name="plan_id" value="<?= $plan['id'] ?>">
-                                                            <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Botón para anular participación -->
-                                    <a href="anular_participacion.php?id=<?= $plan['id'] ?>" class="btn btn-danger btn-sm float-end" onclick="return confirm('¿Estás seguro de que deseas anular tu participación en este plan?');">
+                                    <a href="anular_participacion.php?id=<?= $plan['id'] ?>" class="btn btn-danger btn-sm float-end btn-anular-participacion">
                                         <i class="fas fa-times-circle me-1"></i>Anular Participación
                                     </a>
                                 </div>
@@ -450,6 +443,50 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
                     setTimeout(() => alert.remove(), 500);
                 }
             }, 3000);
+
+            const anularButtons = document.querySelectorAll('.btn-anular-plan');
+
+            anularButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+
+                    // Mostrar cuadro de confirmación
+                    const confirmacion = confirm('¿Estás seguro de que deseas anular este plan?');
+                    if (!confirmacion) {
+                        return; // Salir si el usuario cancela
+                    }
+
+                    const card = button.closest('.card');
+                    card.classList.add('disintegrate');
+
+                    // Redirigir después de la animación
+                    setTimeout(() => {
+                        window.location.href = button.getAttribute('href');
+                    }, 1000); // Esperar a que termine la animación
+                });
+            });
+
+            const anularParticipacionButtons = document.querySelectorAll('.btn-anular-participacion');
+
+            anularParticipacionButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+
+                    // Mostrar cuadro de confirmación
+                    const confirmacion = confirm('¿Estás seguro de que deseas anular tu participación en este plan?');
+                    if (!confirmacion) {
+                        return; // Salir si el usuario cancela
+                    }
+
+                    const card = button.closest('.card');
+                    card.classList.add('disintegrate');
+
+                    // Redirigir después de la animación
+                    setTimeout(() => {
+                        window.location.href = button.getAttribute('href');
+                    }, 1000); // Esperar a que termine la animación
+                });
+            });
         });
     </script>
 </body>
