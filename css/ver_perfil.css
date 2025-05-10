@@ -52,3 +52,9 @@ p strong {
     background-color: #0056b3;
     text-decoration: none;
 }
+
+@media (max-width: 576px) {
+    .container {
+        margin: 10px;
+    }
+}

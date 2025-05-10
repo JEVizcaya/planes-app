@@ -47,6 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/login_register.css">
     <link rel="stylesheet" href="css/ver_perfil.css">
+    <style>
+        @media (max-width: 576px) {
+            .container {
+                margin: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container py-5">

@@ -56,6 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         body {
             padding: 20px 0;
         }
+        @media (max-width: 576px) {
+            .container {
+                margin: 10px;
+            }
+        }
     </style>
 </head>
 <body>
