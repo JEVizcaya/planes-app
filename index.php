@@ -5,7 +5,13 @@ if (isset($_SESSION['user_id'])) {
     exit;
 }
 
+// Incluir la función para eliminar planes expirados
+require_once 'eliminar_planes_expirados.php';
+
 require 'includes/db.php';
+
+// Llamar a la función para eliminar planes expirados
+eliminarPlanesExpirados($pdo);
 
 // Fetch all plans
 $stmt = $pdo->prepare('SELECT id, titulo, descripcion, fecha, lugar FROM planes');
