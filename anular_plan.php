@@ -13,7 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
-        // Eliminar el plan de la base de datos
+        // Eliminar primero los participantes asociados a este plan
+        $delete_participantes = "DELETE FROM participantes WHERE plan_id = :id";
+        $stmt_part = $pdo->prepare($delete_participantes);
+        $stmt_part->bindParam(':id', $plan_id, PDO::PARAM_INT);
+        $stmt_part->execute();
+
+        // Ahora eliminar el plan de la base de datos
         $delete_query = "DELETE FROM planes WHERE id = :id";
         $delete_stmt = $pdo->prepare($delete_query);
         $delete_stmt->bindParam(':id', $plan_id, PDO::PARAM_INT);

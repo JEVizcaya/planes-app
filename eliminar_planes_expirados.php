@@ -1,15 +1,25 @@
 <?php
+// Mostrar errores en pantalla para depuración
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Forzar la zona horaria a Europa/Madrid
+date_default_timezone_set('Europe/Madrid');
+
 // Incluir la conexión a la base de datos
 require_once 'includes/db.php';
 
 function eliminarPlanesExpirados($pdo) {
     try {
-        // Forzar la zona horaria a Europa Central
-        date_default_timezone_set('Europe/Berlin');
-
         // Obtener la fecha y hora actual
         $fecha_actual = date('Y-m-d');
         $hora_actual = date('H:i:s');
+
+        // Mostrar la fecha y hora actual en pantalla SOLO si está en modo depuración manual
+        if (isset($_GET['debug'])) {
+            echo "Fecha del servidor: " . date('Y-m-d H:i:s') . "<br>";
+        }
 
         // Registrar la fecha y hora actual para depuración
         error_log("Fecha actual utilizada en la consulta: " . $fecha_actual);
@@ -50,3 +60,7 @@ function eliminarPlanesExpirados($pdo) {
         return 0;
     }
 }
+
+// Llamar a la función para eliminar planes expirados SIEMPRE al cargar este archivo
+eliminarPlanesExpirados($pdo);
+?>

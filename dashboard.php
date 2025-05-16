@@ -347,7 +347,33 @@ foreach (array_merge($mis_planes, $planes_apuntado) as $plan) {
                                                 </div>
                                                 <div class="modal-body">
                                                     <ul class="list-unstyled">
+                                                        <?php if (!empty(
+                                                            $comentarios_por_plan[$plan['id']])): ?>
+                                                            <?php foreach ($comentarios_por_plan[$plan['id']] as $comentario): ?>
+                                                                <li class="mb-2">
+                                                                    <strong><?= htmlspecialchars($comentario['nombre']) ?>:</strong>
+                                                                    <p class="mb-0 small text-muted">"<?= htmlspecialchars($comentario['comentario']) ?>"</p>
+                                                                    <small class="text-muted">Publicado el <?= $comentario['fecha'] ?></small>
+                                                                </li>
+                                                            <?php endforeach; ?>
+                                                        <?php else: ?>
+                                                            <li class="text-muted">No hay comentarios aún.</li>
+                                                        <?php endif; ?>
                                                     </ul>
+                                                    <!-- Formulario para agregar un nuevo comentario -->
+                                                    <div class="mt-3">
+                                                        <form action="agregar_comentario.php" method="POST">
+                                                            <div class="mb-3">
+                                                                <label for="comentarioParticipante<?= $plan['id'] ?>" class="form-label">Añadir un comentario:</label>
+                                                                <textarea class="form-control" id="comentarioParticipante<?= $plan['id'] ?>" name="comentario" rows="3" required></textarea>
+                                                            </div>
+                                                            <input type="hidden" name="plan_id" value="<?= $plan['id'] ?>">
+                                                            <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                                 </div>
                                             </div>
                                         </div>
